@@ -1,0 +1,30 @@
+name: Trigger Databricks Notebook
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  run-notebook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Databricks CLI
+        run: |
+          pip install databricks-cli
+          
+      - name: Configure Databricks
+        env:
+          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        run: |
+          databricks configure --token <<EOF
+          $DATABRICKS_HOST
+          $DATABRICKS_TOKEN
+          EOF
+          
+      - name: Run notebook
+        run: |
+          databricks jobs run-now --job-id ${{ secrets.JOB_ID }}
