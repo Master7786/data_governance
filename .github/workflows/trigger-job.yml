@@ -1,4 +1,4 @@
-name: Trigger Databricks Notebook
+name: Trigger Databricks Job
 on:
   push:
     branches: [feature/dg_code]
