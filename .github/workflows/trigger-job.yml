@@ -13,7 +13,7 @@ jobs:
       
       - name: Set up Databricks CLI
         run: |
-          pip install databricks-cli
+          pip install --upgrade databricks-cli
           
       - name: Configure Databricks with Service Principal
         env:
@@ -22,9 +22,9 @@ jobs:
           DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
         run: |
           databricks configure --host $DATABRICKS_HOST \
-            --client-id $DATABRICKS_CLIENT_ID \
-            --client-secret $DATABRICKS_CLIENT_SECRET \
-            --aad-token
+            --service-principal-id $DATABRICKS_CLIENT_ID \
+            --service-principal-secret $DATABRICKS_CLIENT_SECRET \
+            --insecure
           
       - name: Run notebook
         run: |
