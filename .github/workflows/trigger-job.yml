@@ -15,16 +15,16 @@ jobs:
         run: |
           pip install databricks-cli
           
-      - name: Configure Databricks
+      - name: Configure Databricks with Service Principal
         env:
           DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
           DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
           DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
         run: |
-          databricks configure --token <<EOF
-          $DATABRICKS_HOST
-          $DATABRICKS_TOKEN
-          EOF
+          databricks configure --host $DATABRICKS_HOST \
+            --client-id $DATABRICKS_CLIENT_ID \
+            --client-secret $DATABRICKS_CLIENT_SECRET \
+            --aad-token
           
       - name: Run notebook
         run: |
