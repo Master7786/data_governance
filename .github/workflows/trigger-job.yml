@@ -21,7 +21,7 @@ jobs:
           DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
           DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
         run: |
-          databricks configure --host $DATABRICKS_HOST --token $DATABRICKS_CLIENT_ID --insecure
+          databricks config set --host $DATABRICKS_HOST --token $DATABRICKS_CLIENT_SECRET
           
       - name: Run notebook
         run: |
