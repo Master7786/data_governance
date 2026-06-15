@@ -15,22 +15,12 @@ jobs:
         run: |
           pip install --upgrade databricks-cli
           
-      - name: Configure Databricks CLI
-        env:
-          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
-          DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
-          DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
-        run: |
-          databricks configure --token --host $DATABRICKS_HOST --username $DATABRICKS_CLIENT_ID --password $DATABRICKS_CLIENT_SECRET
-          
-      - name: Run job
-        env:
-          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
-          DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
-          DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
-        run: |
-          databricks jobs run-now --job-id ${{ vars.JOB_ID }}
-          
       - name: Run notebook
+        env:
+          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
+          DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
+          DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
         run: |
+          export DATABRICKS_HOST="${DATABRICKS_HOST}"
+          export DATABRICKS_TOKEN="${DATABRICKS_CLIENT_ID}:${DATABRICKS_CLIENT_SECRET}"
           databricks jobs run-now --job-id ${{ vars.JOB_ID }}
