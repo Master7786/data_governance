@@ -1,0 +1,29 @@
+name: Run Databricks Job API
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get OAuth Token
+        run: |
+          TOKEN=$(curl -s \
+            -u "${{ secrets.DATABRICKS_CLIENT_ID }}:${{ secrets.DATABRICKS_CLIENT_SECRET }}" \
+            -d "grant_type=client_credentials&scope=all-apis" \
+            "https://${{ vars.DATABRICKS_HOST }}/oidc/v1/token" \
+            | jq -r '.access_token')
+
+          echo "TOKEN=$TOKEN" >> $GITHUB_ENV
+
+      - name: Trigger Job
+        run: |
+          curl -X POST \
+            "https://${{ vars.DATABRICKS_HOST }}/api/2.1/jobs/run-now" \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{
+                  "job_id": '"${{ vars.JOB_ID }}"'
+                }'
