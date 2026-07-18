@@ -1,0 +1,20 @@
+# The main pipeline for data_governance
+
+resources:
+  pipelines:
+    data_governance_etl:
+      name: data_governance_etl
+      catalog: ${var.catalog}
+      schema: ${var.schema}
+      serverless: true
+      root_path: "../src/data_governance_etl"
+
+      libraries:
+        - glob:
+            include: ../src/data_governance_etl/transformations/**
+
+      environment:
+        dependencies:
+          # We include every dependency defined by pyproject.toml by defining an editable environment
+          # that points to the folder where pyproject.toml is deployed.
+          - --editable ${workspace.file_path}

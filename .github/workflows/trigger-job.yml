@@ -1,28 +1,23 @@
 name: Trigger Databricks Job
+
 on:
-  push:
-    branches: [feature/dg_code]
   workflow_dispatch:
 
 jobs:
   run-notebook:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-      
+        uses: actions/checkout@v4
+
       - name: Set up Databricks CLI
-        run: |
-          pip install --upgrade databricks-cli
-          
-      - name: Configure Databricks with Service Principal
+        uses: databricks/setup-cli@main
+
+      - name: Run Databricks job
         env:
           DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
           DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
           DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
         run: |
-          echo "$DATABRICKS_CLIENT_ID" | databricks configure --host $DATABRICKS_HOST --token --insecure
-          
-      - name: Run notebook
-        run: |
-          databricks jobs run-now --job-id ${{ vars.JOB_ID }}
+          databricks jobs run-now "${{ vars.JOB_ID }}"
