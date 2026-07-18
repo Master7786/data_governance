@@ -8,7 +8,7 @@ include:
 targets:
   dev:
     default: true
-    mode: development
+    mode: production
     workspace:
       host: https://dbc-a88aaec3-3ab9.cloud.databricks.com
       root_path: /Workspace/Shared/data_governance/${bundle.target}
