@@ -1,0 +1,14 @@
+import streamlit as st
+
+st.set_page_config(
+    page_title="Sample DAB App"
+)
+
+st.title("Databricks Asset Bundle")
+
+st.success("Deployment successful!")
+
+name = st.text_input("Enter your name")
+
+if name:
+    st.write(f"Hello, {name}")
