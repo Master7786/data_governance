@@ -3,6 +3,6 @@ resources:
     sample_streamlit_app:
       name: sample-streamlit-app
 
-      source_code_path: /Workspace/Shared/data_governance/${bundle.target}/src/app/ui
+      source_code_path: ../src/app/ui
 
       description: Sample Streamlit application
