@@ -61,7 +61,7 @@ jobs:
           databricks bundle deploy \
             --target dev \
             --auto-approve \
-            --force-lock
+            --force-lock \
             --debug
       - name: Deployment Summary
         run: |
