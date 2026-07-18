@@ -14,7 +14,7 @@ targets:
       host: ${env.DATABRICKS_HOST}
 
     run_as:
-      service_principal_name: ${env.DATABRICKS_CLIENT_ID}
+      service_principal_name: ${{vars.DATABRICKS_CLIENT_ID}}
 
   prod:
     mode: production
@@ -23,4 +23,4 @@ targets:
       host: ${env.DATABRICKS_HOST}
 
     run_as:
-      service_principal_name: ${env.DATABRICKS_CLIENT_ID}
+      service_principal_name: ${{vars.DATABRICKS_CLIENT_ID}}
