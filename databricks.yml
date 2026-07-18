@@ -9,18 +9,10 @@ targets:
   dev:
     default: true
     mode: development
-
-    workspace:
-      host: ${{vars.DATABRICKS_HOST}}
-
     run_as:
-      service_principal_name: ${{vars.DATABRICKS_CLIENT_ID}}
+      service_principal_name: e57def7b-caea-46dd-943c-f3f20592d21c
 
   prod:
     mode: production
-
-    workspace:
-      host: ${env.DATABRICKS_HOST}
-
     run_as:
-      service_principal_name: ${{vars.DATABRICKS_CLIENT_ID}}
+      service_principal_name: e57def7b-caea-46dd-943c-f3f20592d21c
