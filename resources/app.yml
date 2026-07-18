@@ -1,14 +1,8 @@
-import streamlit as st
+resources:
+  apps:
+    sample_streamlit_app:
+      name: sample-streamlit-app
 
-st.set_page_config(
-    page_title="Sample DAB App",
-)
+      source_code_path: .
 
-st.title("Databricks Asset Bundle")
-
-st.success("Deployment successful!")
-
-name = st.text_input("Enter your name")
-
-if name:
-    st.write(f"Hello, {name}")
+      description: Sample Streamlit application
