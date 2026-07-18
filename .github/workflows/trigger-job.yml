@@ -1,26 +1,26 @@
-name: Trigger Databricks Job
+# name: Trigger Databricks Job
 
-on:
-  push:
-    branches:
-      - feature/dg_code
-  workflow_dispatch:
+# on:
+#   push:
+#     branches:
+#       - feature/dg_code
+#   workflow_dispatch:
 
-jobs:
-  run-notebook:
-    runs-on: ubuntu-latest
+# jobs:
+#   run-notebook:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
 
-      - name: Set up Databricks CLI
-        uses: databricks/setup-cli@main
+#       - name: Set up Databricks CLI
+#         uses: databricks/setup-cli@main
 
-      - name: Run Databricks job
-        env:
-          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
-          DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
-          DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
-        run: |
-          databricks jobs run-now "${{ vars.JOB_ID }}"
+#       - name: Run Databricks job
+#         env:
+#           DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
+#           DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
+#           DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
+#         run: |
+#           databricks jobs run-now "${{ vars.JOB_ID }}"
