@@ -11,7 +11,7 @@ targets:
     mode: development
 
     workspace:
-      host: ${env.DATABRICKS_HOST}
+      host: ${{vars.DATABRICKS_HOST}}
 
     run_as:
       service_principal_name: ${{vars.DATABRICKS_CLIENT_ID}}
