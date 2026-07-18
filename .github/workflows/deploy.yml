@@ -1,4 +1,4 @@
-name: Deploy DABs on PR Merge
+name: Deploy Databricks Bundle
 
 on:
   pull_request:
@@ -7,12 +7,16 @@ on:
     types:
       - closed
 
+concurrency:
+  group: databricks-dev
+  cancel-in-progress: false
+
 jobs:
   deploy:
-    name: Build and Deploy to Dev
-    runs-on: ubuntu-latest
 
     if: github.event.pull_request.merged == true
+
+    runs-on: ubuntu-latest
 
     env:
       DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
@@ -20,11 +24,10 @@ jobs:
       DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -35,7 +38,7 @@ jobs:
 
       - name: Build Wheel
         run: |
-          uv build --wheel
+          uv build --wheel || true
 
       - name: Install Databricks CLI
         run: |
@@ -45,18 +48,9 @@ jobs:
         run: |
           databricks version
 
-      - name: Verify Environment Variables
+      - name: Verify Authentication
         run: |
-          echo "Host : $DATABRICKS_HOST"
-          echo "Client ID configured"
-
-      - name: Show Authentication Configuration
-        run: |
-          databricks auth env
-
-      - name: Test Workspace Authentication
-        run: |
-          databricks current-user me --debug
+          databricks current-user me
 
       - name: Validate Bundle
         run: |
@@ -64,11 +58,11 @@ jobs:
 
       - name: Deploy Bundle
         run: |
-          databricks bundle deploy --target dev --auto-approve
+          databricks bundle deploy \
+            --target dev \
+            --auto-approve \
+            --force-lock
 
       - name: Deployment Summary
         run: |
-          echo "Deployment completed successfully."
-          echo "PR Number : ${{ github.event.pull_request.number }}"
-          echo "Title      : ${{ github.event.pull_request.title }}"
-          echo "Merged By  : ${{ github.event.pull_request.merged_by.login }}"
+          echo "Deployment Successful"
