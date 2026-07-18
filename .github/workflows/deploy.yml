@@ -11,49 +11,68 @@ jobs:
   deploy:
     name: Build and Deploy to Dev
     runs-on: ubuntu-latest
-    # Only run if PR was merged (not just closed)
+
     if: github.event.pull_request.merged == true
-    
+
+    env:
+      DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
+      DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
+      DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Set up Python
+
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      
+          python-version: "3.11"
+
       - name: Install uv
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-      
-      - name: Build Python wheel
+
+      - name: Build Wheel
         run: |
           uv build --wheel
-      
+
       - name: Install Databricks CLI
         run: |
           curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
-      
-      - name: Deploy bundle to dev
-        env:
-          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
-          DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
-          DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
+
+      - name: Display CLI Version
+        run: |
+          databricks version
+
+      - name: Verify Environment Variables
+        run: |
+          echo "Host : $DATABRICKS_HOST"
+          echo "Client ID configured"
+
+      - name: Show Authentication Configuration
+        run: |
+          databricks auth env
+
+      - name: Test Workspace Authentication
+        run: |
+          databricks current-user me --debug
+
+      - name: Validate Bundle
+        run: |
+          databricks bundle validate --target dev
+
+      - name: Deploy Bundle
         run: |
           databricks bundle deploy --target dev --auto-approve
-      
-      - name: Run sample job
-        env:
-          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
-          DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
-          DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
+
+      - name: Run Sample Job
         run: |
           databricks bundle run sample_job --target dev
-      
-      - name: Deployment summary
+
+      - name: Deployment Summary
         run: |
-          echo "Deployed to dev environment"
-          echo "PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}"
-          echo "Merged by: ${{ github.event.pull_request.merged_by.login }}"
+          echo "Deployment completed successfully."
+          echo "PR Number : ${{ github.event.pull_request.number }}"
+          echo "Title      : ${{ github.event.pull_request.title }}"
+          echo "Merged By  : ${{ github.event.pull_request.merged_by.login }}"
