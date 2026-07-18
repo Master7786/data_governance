@@ -33,9 +33,9 @@ resources:
             entry_point: main
             parameters:
               - "--catalog"
-              - "${var.catalog}"
+              - "data_governance"
               - "--schema"
-              - "${var.schema}"
+              - "insurance"
           environment_key: default
         - task_key: refresh_pipeline
           depends_on:
