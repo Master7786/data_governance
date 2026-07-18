@@ -25,24 +25,7 @@ resources:
         - task_key: notebook_task
           notebook_task:
             notebook_path: ../src/sample_notebook.ipynb
-        - task_key: python_wheel_task
-          depends_on:
-            - task_key: notebook_task
-          python_wheel_task:
-            package_name: data_governance
-            entry_point: main
-            parameters:
-              - "--catalog"
-              - "data_governance"
-              - "--schema"
-              - "insurance"
-          environment_key: default
-        - task_key: refresh_pipeline
-          depends_on:
-            - task_key: notebook_task
-          pipeline_task:
-            pipeline_id: ${resources.pipelines.data_governance_etl.id}
-
+        
       environments:
         - environment_key: default
           spec:
