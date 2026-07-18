@@ -62,7 +62,6 @@ jobs:
             --target dev \
             --auto-approve \
             --force-lock
-
       - name: Deployment Summary
         run: |
           echo "Deployment Successful"
