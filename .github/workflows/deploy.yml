@@ -1,4 +1,4 @@
-name: Build and Deploy to Dev
+name: Deploy Databricks Bundle
 
 on:
   pull_request:
@@ -13,7 +13,6 @@ concurrency:
 
 jobs:
   deploy:
-
     if: github.event.pull_request.merged == true
 
     runs-on: ubuntu-latest
@@ -24,7 +23,6 @@ jobs:
       DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
 
     steps:
-
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -38,7 +36,7 @@ jobs:
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
-      - name: Build Wheel
+      - name: Build Python Wheel
         run: |
           uv build --wheel
 
@@ -46,7 +44,11 @@ jobs:
         run: |
           curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
 
-      - name: CLI Version
+      ##########################################################
+      # Diagnostics
+      ##########################################################
+
+      - name: Databricks CLI Version
         run: |
           databricks version
 
@@ -60,13 +62,21 @@ jobs:
           pwd
           find .
 
+      - name: Bundle Summary
+        run: |
+          databricks bundle summary --target dev || true
+
+      ##########################################################
+      # Validate Bundle
+      ##########################################################
+
       - name: Validate Bundle
         run: |
           databricks bundle validate --target dev
 
-      - name: Bundle Summary
-        run: |
-          databricks bundle summary --target dev || true
+      ##########################################################
+      # Deploy Bundle
+      ##########################################################
 
       - name: Deploy Bundle
         run: |
@@ -76,30 +86,34 @@ jobs:
             --force-lock \
             --debug
 
-      ##################################################################
-      # Deploy application source
-      ##################################################################
+      ##########################################################
+      # Deploy Streamlit App Source
+      ##########################################################
 
       - name: Deploy App Source
         run: |
           databricks bundle run sample_streamlit_app --target dev
 
-      ##################################################################
-      # Start App
-      ##################################################################
+      ##########################################################
+      # Verify App
+      ##########################################################
 
-      - name: Start App
-        run: |
-          databricks apps start sample-streamlit-app
-
-      ##################################################################
-      # Verify
-      ##################################################################
-
-      - name: Verify App
+      - name: App Status
         run: |
           databricks apps get sample-streamlit-app
 
-      - name: Finished
+      ##########################################################
+      # List Deployments
+      ##########################################################
+
+      - name: Deployment History
         run: |
-          echo "Deployment Complete"
+          databricks apps deployments list sample-streamlit-app || true
+
+      ##########################################################
+      # Finished
+      ##########################################################
+
+      - name: Success
+        run: |
+          echo "Deployment completed successfully."
