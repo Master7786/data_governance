@@ -1,4 +1,4 @@
-name: Deploy Databricks Bundle
+name: Build and Deploy to Dev
 
 on:
   pull_request:
@@ -25,9 +25,11 @@ jobs:
 
     steps:
 
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -38,23 +40,33 @@ jobs:
 
       - name: Build Wheel
         run: |
-          uv build --wheel || true
+          uv build --wheel
 
       - name: Install Databricks CLI
         run: |
           curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
 
-      - name: Display CLI Version
+      - name: CLI Version
         run: |
           databricks version
 
-      - name: Verify Authentication
+      - name: Authentication
         run: |
+          databricks auth env
           databricks current-user me
+
+      - name: Repository Structure
+        run: |
+          pwd
+          find .
 
       - name: Validate Bundle
         run: |
           databricks bundle validate --target dev
+
+      - name: Bundle Summary
+        run: |
+          databricks bundle summary --target dev || true
 
       - name: Deploy Bundle
         run: |
@@ -63,6 +75,31 @@ jobs:
             --auto-approve \
             --force-lock \
             --debug
-      - name: Deployment Summary
+
+      ##################################################################
+      # Deploy application source
+      ##################################################################
+
+      - name: Deploy App Source
         run: |
-          echo "Deployment Successful"
+          databricks bundle run sample_streamlit_app --target dev
+
+      ##################################################################
+      # Start App
+      ##################################################################
+
+      - name: Start App
+        run: |
+          databricks apps start sample-streamlit-app
+
+      ##################################################################
+      # Verify
+      ##################################################################
+
+      - name: Verify App
+        run: |
+          databricks apps get sample-streamlit-app
+
+      - name: Finished
+        run: |
+          echo "Deployment Complete"
