@@ -90,9 +90,14 @@ jobs:
       # Deploy Streamlit App Source
       ##########################################################
 
+      # - name: Deploy App Source
+      #   run: |
+      #     databricks bundle run sample_streamlit_app --target dev
+
       - name: Deploy App Source
         run: |
-          databricks bundle run sample_streamlit_app --target dev
+          databricks apps deploy sample-streamlit-app \
+            --source-code-path /Workspace/Shared/data_governance/dev/files/src/app/ui
 
       ##########################################################
       # Verify App
