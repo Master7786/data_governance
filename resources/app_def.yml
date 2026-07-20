@@ -1,6 +1,6 @@
 resources:
   apps:
-    job_manager:
+    sample_app:
       name: "sample-app"
       description: "sample app"
 
