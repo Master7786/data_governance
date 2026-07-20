@@ -82,6 +82,7 @@ jobs:
         run: |
           databricks bundle deploy \
             --target dev \
+            --var developer="${{ github.actor }}" \
             --auto-approve \
             --force-lock \
 
@@ -91,7 +92,7 @@ jobs:
 
       - name: Deploy App Source
         run: |
-          databricks bundle run sample_app --target dev
+          databricks bundle run sample_app --target dev --var developer="${{ github.actor }}" 
 
       # - name: Deploy App Source
       #   run: |
