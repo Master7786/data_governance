@@ -5,7 +5,7 @@ resources:
       description: Sample Streamlit application
       source_code_path: ../src/app/ui
 
-      command:
-        - streamlit
-        - run
-        - app.py
+      # command:
+      #   - streamlit
+      #   - run
+      #   - app.py
