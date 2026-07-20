@@ -85,18 +85,18 @@ jobs:
             --auto-approve \
             --force-lock \
 
-      # ##########################################################
-      # # Deploy Streamlit App Source
-      # ##########################################################
+      ##########################################################
+      # Deploy Streamlit App Source
+      ##########################################################
+
+      - name: Deploy App Source
+        run: |
+          databricks bundle run sample-app --target dev
 
       # - name: Deploy App Source
       #   run: |
-      #     databricks bundle run sample-app --target dev
-
-      # # - name: Deploy App Source
-      # #   run: |
-      # #     databricks apps deploy sample-app \
-      # #       --source-code-path /Workspace/Shared/data_governance/dev/files/src/app/ui
+      #     databricks apps deploy sample-app \
+      #       --source-code-path /Workspace/Shared/data_governance/dev/files/src/app/ui
 
       # ##########################################################
       # # Verify App
