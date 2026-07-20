@@ -10,8 +10,8 @@ targets:
     default: true
     mode: production
     workspace:
-      host: https://dbc-8fff8432-25ee.cloud.databricks.com
-      root_path: /Workspace/Shared/data_governance/${bundle.target}
+      host: https://dbc-8fff8432-25ee.cloud.databricks.com/
+      root_path: ~/.bundle/${bundle.name}/${bundle.target}
     run_as:
       service_principal_name: fd4e2907-b2e0-4c55-8d7d-41c12df3a12c
 
