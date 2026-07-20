@@ -11,7 +11,7 @@ targets:
     mode: production
     workspace:
       host: https://dbc-a88aaec3-3ab9.cloud.databricks.com
-      root_path: /Workspace/Shared/data_governance/${bundle.target}
+      root_path: ~/.bundle/${bundle.name}/${bundle.target}
     run_as:
       service_principal_name: e57def7b-caea-46dd-943c-f3f20592d21c
 
