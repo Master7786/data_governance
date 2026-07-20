@@ -64,7 +64,7 @@ jobs:
 
       - name: Bundle Summary
         run: |
-          databricks bundle summary --target dev || true
+          databricks bundle summary --target dev --var developer="${{ github.actor }}" || true
 
       ##########################################################
       # Validate Bundle
@@ -72,7 +72,7 @@ jobs:
 
       - name: Validate Bundle
         run: |
-          databricks bundle validate --target dev
+          databricks bundle validate --target dev --var developer="${{ github.actor }}"
 
       ##########################################################
       # Deploy Bundle
