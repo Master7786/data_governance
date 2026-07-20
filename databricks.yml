@@ -1,6 +1,11 @@
 bundle:
   name: data_governance
 
+variables:
+  developer:
+    description: GitHub user
+    default: local
+
 include:
   - resources/*.yml
   - resources/*/*.yml
