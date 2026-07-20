@@ -91,11 +91,11 @@ jobs:
 
       - name: Deploy App Source
         run: |
-          databricks bundle run sample-app --target dev
+          databricks bundle run sample_app --target dev
 
       # - name: Deploy App Source
       #   run: |
-      #     databricks apps deploy sample-app \
+      #     databricks apps deploy sample_app \
       #       --source-code-path /Workspace/Shared/data_governance/dev/files/src/app/ui
 
       # ##########################################################
@@ -104,7 +104,7 @@ jobs:
 
       # - name: App Status
       #   run: |
-      #     databricks apps get sample-app
+      #     databricks apps get sample_app
 
       # ##########################################################
       # # List Deployments
@@ -112,7 +112,7 @@ jobs:
 
       # - name: Deployment History
       #   run: |
-      #     databricks apps deployments list sample-app || true
+      #     databricks apps deployments list sample_app || true
 
       # ##########################################################
       # # Finished
