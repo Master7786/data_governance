@@ -1,0 +1,8 @@
+resources:
+  apps:
+    job_manager:
+      name: "sample app"
+      description: "App which manages job created by this bundle"
+
+      # The location of the source code for the app.
+      source_code_path: ../src/app/ui
