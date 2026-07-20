@@ -84,41 +84,40 @@ jobs:
             --target dev \
             --auto-approve \
             --force-lock \
-            --debug
 
-      ##########################################################
-      # Deploy Streamlit App Source
-      ##########################################################
-
-      - name: Deploy App Source
-        run: |
-          databricks bundle run sample-app --target dev
+      # ##########################################################
+      # # Deploy Streamlit App Source
+      # ##########################################################
 
       # - name: Deploy App Source
       #   run: |
-      #     databricks apps deploy sample-app \
-      #       --source-code-path /Workspace/Shared/data_governance/dev/files/src/app/ui
+      #     databricks bundle run sample-app --target dev
 
-      ##########################################################
-      # Verify App
-      ##########################################################
+      # # - name: Deploy App Source
+      # #   run: |
+      # #     databricks apps deploy sample-app \
+      # #       --source-code-path /Workspace/Shared/data_governance/dev/files/src/app/ui
 
-      - name: App Status
-        run: |
-          databricks apps get sample-app
+      # ##########################################################
+      # # Verify App
+      # ##########################################################
 
-      ##########################################################
-      # List Deployments
-      ##########################################################
+      # - name: App Status
+      #   run: |
+      #     databricks apps get sample-app
 
-      - name: Deployment History
-        run: |
-          databricks apps deployments list sample-app || true
+      # ##########################################################
+      # # List Deployments
+      # ##########################################################
 
-      ##########################################################
-      # Finished
-      ##########################################################
+      # - name: Deployment History
+      #   run: |
+      #     databricks apps deployments list sample-app || true
 
-      - name: Success
-        run: |
-          echo "Deployment completed successfully."
+      # ##########################################################
+      # # Finished
+      # ##########################################################
+
+      # - name: Success
+      #   run: |
+      #     echo "Deployment completed successfully."
