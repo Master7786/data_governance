@@ -1,8 +1,8 @@
 resources:
   apps:
     job_manager:
-      name: "sample_app"
-      description: "sample_app app"
+      name: "sample-app"
+      description: "sample app"
 
       # The location of the source code for the app.
       source_code_path: ../src/app/ui
