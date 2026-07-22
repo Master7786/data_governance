@@ -93,6 +93,9 @@ jobs:
       - name: Deploy App Source
         run: |
           databricks bundle run sample_app --target dev --var developer="${{ github.actor }}" 
+        env:
+          DATABRICKS_CLIENT_ID:  ${{ secrets.DATABRICKS_CLIENT_ID }}
+          DATABRICKS_CLIENT_SECRET:  ${{ secrets.DATABRICKS_CLIENT_SECRET }}
 
       # - name: Deploy App Source
       #   run: |
