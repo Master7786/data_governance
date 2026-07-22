@@ -48,9 +48,10 @@ jobs:
       # Diagnostics
       ##########################################################
 
-      - name: Databricks CLI Version
+      - name: Show Databricks CLI Version
         run: |
           databricks version
+          databricks bundle schema
 
       - name: Authentication
         run: |
