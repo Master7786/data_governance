@@ -40,7 +40,7 @@ jobs:
         run: |
           uv build --wheel
 
-      - name: Install Databricks CLI
+      - name: Install --upgrade Databricks CLI
         run: |
           curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
 
