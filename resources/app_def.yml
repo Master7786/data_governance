@@ -6,3 +6,9 @@ resources:
 
       # The location of the source code for the app.
       source_code_path: ../src/app/ui
+      environment_variables:
+        # Securely map a secret from Databricks Secret Scope
+        client-id:
+          valueFrom: "{{secrets/security/client-id}}"
+        client-secret:
+          valueFrom: "{{secrets/security/client-secret}}"
