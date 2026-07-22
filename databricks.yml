@@ -5,6 +5,8 @@ variables:
   developer:
     description: GitHub user
     default: local
+  DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
+  DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
 
 include:
   - resources/*.yml
