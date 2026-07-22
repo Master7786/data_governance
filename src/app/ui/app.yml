@@ -2,3 +2,10 @@ command:
   - streamlit
   - run
   - app.py
+
+env:
+  DATABRICKS_CLIENT_ID:
+    valueFrom: client-id
+
+  DATABRICKS_CLIENT_SECRET:
+    valueFrom: client-secret
