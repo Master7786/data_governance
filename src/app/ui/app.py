@@ -19,8 +19,6 @@ response = requests.post(
 print(response.status_code)
 print(response.text)
 
-print(f"Loaded Client ID: {client_id}")
-
 st.set_page_config(page_title="Sample DAB App")
 
 st.title("Databricks Apps")
