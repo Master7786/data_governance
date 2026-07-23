@@ -2,8 +2,8 @@ import streamlit as st
 import requests
 import os
 
-client_id = os.environ.get("clientid")
-client_secret = os.environ.get("secret")
+client_id = os.getenv("clientid")
+client_secret = os.getenv("secret")
 
 workspace_host = "https://dbc-8fff8432-25ee.cloud.databricks.com"
 
