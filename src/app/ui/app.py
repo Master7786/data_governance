@@ -2,8 +2,8 @@ import streamlit as st
 
 import os
 
-client_id = os.environ.get("DATABRICKS_CLIENT_ID")
-client_secret = os.environ.get("DATABRICKS_CLIENT_SECRET")
+client_id = os.environ.get("client-id")
+client_secret = os.environ.get("client-secret")
 
 print(f"Loaded Client ID: {client_id}")
 
