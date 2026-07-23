@@ -7,13 +7,13 @@ resources:
       # The location of the source code for the app.
       source_code_path: ../src/app/ui
       resources:
-        - name: client-id
+        - name: clientid
           secret:
             scope: security
-            key: client-id
+            key: clientid
             permission: READ
-        - name: client-secret
+        - name: secret
           secret:
             scope: security
-            key: client-secret
+            key: secret
             permission: READ
