@@ -2,8 +2,8 @@ import streamlit as st
 
 import os
 
-client_id = os.environ.get("client-id")
-client_secret = os.environ.get("client-secret")
+client_id = os.environ.get("clientid")
+client_secret = os.environ.get("secret")
 
 print(f"Loaded Client ID: {client_id}")
 
