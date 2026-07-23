@@ -2,3 +2,9 @@ command:
   - streamlit
   - run
   - app.py
+env:
+  - name: CLIENT_ID
+    valueFrom: clientid
+
+  - name: CLIENT_SECRET
+    valueFrom: secret
